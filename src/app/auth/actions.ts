@@ -3,6 +3,7 @@
 import { AuthenticationError } from "@/entities/errors/auth.error";
 import { InputParseError } from "@/entities/errors/common.error";
 import { loginController } from "@/interface-adapters/controller/login.controller";
+import { resendEmailController } from "@/interface-adapters/controller/resend-email.controller";
 import { signupController } from "@/interface-adapters/controller/signup.controller";
 import {
   LoginForm,
@@ -57,6 +58,41 @@ export async function signupAction(input: SignupForm) {
       return {
         success: false,
         error: { message: "El usuario ya existe" },
+      };
+    }
+
+    return {
+      success: false,
+      error: {
+        message: "Algo ha salido mal",
+      },
+    };
+  }
+
+  return {
+    success: true,
+  };
+}
+
+export async function resendSignupEmailAction(email: string) {
+  try {
+    await resendEmailController(email);
+  } catch (e) {
+    if (e instanceof InputParseError) {
+      return {
+        success: false,
+        error: {
+          message: "Algunos de los campos no son válidos",
+        },
+      };
+    }
+
+    if (e instanceof AuthenticationError) {
+      return {
+        success: false,
+        error: {
+          message: "El usuario ya existe",
+        },
       };
     }
 

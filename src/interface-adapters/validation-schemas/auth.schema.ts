@@ -18,7 +18,9 @@ export const signupForm = z
     password: z
       .string("La contraseña debe ser un texto")
       .min(8, "La contraseña deben tener al menos 8 caracteres"),
-    confirmPassword: z.string().min(8),
+    confirmPassword: z
+      .string("La contraseña debe ser un texto")
+      .min(8, "La contraseña deben tener al menos 8 caracteres"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Las contraseñas no coinciden",

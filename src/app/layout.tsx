@@ -32,7 +32,7 @@ export default function RootLayout({
         <TooltipProvider>
           <>
             {children}
-            <Toaster richColors />
+            <Toaster richColors visibleToasts={10} />
           </>
         </TooltipProvider>
       </body>

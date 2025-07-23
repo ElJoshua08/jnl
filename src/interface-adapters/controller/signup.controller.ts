@@ -13,5 +13,5 @@ export async function signupController(input: SignupForm): Promise<void> {
   }
 
   const authService = getInjection("IAuthService");
-  await authService.signup(data.email, data.password);
+  await authService.signup(data.email, data.password, data.email);
 }

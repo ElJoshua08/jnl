@@ -46,13 +46,17 @@ export class AuthService implements IAuthService {
     }
   }
 
-  async signup(email: string, password: string) {
+  async signup(email: string, password: string, name: string) {
     const supabase = await createClient();
 
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
+        data: {
+          display_name: name,
+          name,
+        },
         emailRedirectTo: `/`,
       },
     });
@@ -82,6 +86,23 @@ export class AuthService implements IAuthService {
     const { error } = await supabase.auth.verifyOtp({
       token_hash,
       type,
+    });
+
+    if (error) {
+      throw new AuthenticationError(error.message, {
+        cause: error,
+      });
+    }
+  }
+
+  async resendSignupEmail(email: string) {
+    const supabase = await createClient();
+    const { error } = await supabase.auth.resend({
+      type: "signup",
+      email,
+      options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/`,
+      }
     });
 
     if (error) {

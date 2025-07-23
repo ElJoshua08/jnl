@@ -1,9 +1,7 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+"use client";
+
+import { AccountDropdown } from "@/components/shared/account";
 import { buttonVariants } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 
 export const CtaNav = ({
@@ -26,16 +24,7 @@ export const CtaNav = ({
       </Link>
 
       {user ? (
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Avatar>
-              <AvatarImage />
-              <AvatarFallback>
-                {user.user_metadata.name.split("")[0]}
-              </AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-        </DropdownMenu>
+        <AccountDropdown user={user} />
       ) : (
         <Link
           href="/auth/login"

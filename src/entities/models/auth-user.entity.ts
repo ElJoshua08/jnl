@@ -5,6 +5,7 @@ export const authUser = z.object({
   email: z.string(),
   user_metadata: z.object({
     name: z.string(),
+    role: z.string(),
   }),
 });
 

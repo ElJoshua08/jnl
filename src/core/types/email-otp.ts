@@ -5,3 +5,5 @@ export type EmailOtpType =
   | "recovery"
   | "email_change"
   | "email";
+
+  export type ResendEmailType = "signup";

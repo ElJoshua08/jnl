@@ -58,7 +58,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex items-center justify-center w-full h-dvh flex-col gap-y-6">
-      {successfulSubmit && <SuccessDialog />}
+      {successfulSubmit && <SuccessDialog email={form.getValues().email} />}
       <Card className="min-w-md">
         <CardHeader>
           <CardTitle>Registrate en J&L</CardTitle>
