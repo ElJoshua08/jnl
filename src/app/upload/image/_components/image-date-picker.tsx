@@ -1,6 +1,6 @@
 "use client";
 
-import { format, subDays } from "date-fns";
+import { formatDistanceToNow, isToday, isYesterday, subDays } from "date-fns";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { es } from "date-fns/locale";
 
-export default function DatePicker() {
+export default function ImageDatePicker() {
   const today = new Date();
   const yesterday = subDays(today, 1);
   const lastWeek = subDays(today, 6);
@@ -22,17 +22,32 @@ export default function DatePicker() {
   const [month, setMonth] = useState(today);
   const [date, setDate] = useState<Date | undefined>(today);
 
+  function formatDate(date: Date) {
+    if (isToday(date)) {
+      return "Hoy";
+    } else if (isYesterday(date)) {
+      return "Ayer";
+    } else {
+      return formatDistanceToNow(date, { locale: es, addSuffix: true });
+    }
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="w-full"
+          className="w-full capitalize"
         >
-          {date ? format(date, "dd/MM/yyyy") : "Seleccionar fecha"}
+          {date
+            ? formatDate(date)
+            : "Seleccionar fecha"}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" sideOffset={15}>
+      <DropdownMenuContent
+        align="start"
+        sideOffset={15}
+      >
         <div className="flex max-sm:flex-col">
           <div className="relative py-4 max-sm:order-1 max-sm:border-t sm:w-32">
             <div className="h-full sm:border-e">

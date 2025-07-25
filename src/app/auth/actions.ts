@@ -45,8 +45,6 @@ export async function signupAction(input: SignupForm) {
   try {
     await signupController(input);
   } catch (e) {
-    console.log(e);
-
     if (e instanceof InputParseError) {
       return {
         success: false,

@@ -46,8 +46,6 @@ export default function LoginPage() {
   async function handleSubmit(data: SignupForm) {
     const { success, error } = await signupAction(data);
 
-    console.log(success, error);
-
     if (error) {
       toast.error(error.message);
       return;
