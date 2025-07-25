@@ -6,7 +6,6 @@ import { ImageInput } from "@/app/upload/image/_components/image-input";
 import ImagesTable from "@/app/upload/image/_components/images-table";
 import { ImagesUpload } from "@/app/upload/image/_components/images-upload";
 import { useState } from "react";
-import { toast } from "sonner";
 
 export default function UploadImagePage() {
   const [images, setImages] = useState<File[]>([]);
@@ -22,11 +21,10 @@ export default function UploadImagePage() {
         if (image.name === file.name) {
           return newFile;
         } else {
-          toast.error("No se encontró la imagen base");
-          return false;
+          return image;
         }
       })
-      .filter((image) => image !== false);
+
     setImages(newImages);
   }
 
@@ -42,7 +40,7 @@ export default function UploadImagePage() {
       <section className="w-full h-full flex flex-col gap-y-12 lg:max-w-1/2 grow ">
         <ImageInput onAdd={handleAddImages} />
 
-        <div className="overflow-auto grow min-h-0">
+        <div className="overflow-auto grow min-h-0 shadow-lg  transition-all duration-300 hover:shadow-xl  rounded-xl">
           <ImagesTable
             onUpdate={handleUpdateImages}
             onDelete={handleDeleteImages}

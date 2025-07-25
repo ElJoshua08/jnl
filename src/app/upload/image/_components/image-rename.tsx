@@ -45,7 +45,9 @@ export const ImageRename = ({
   async function handleSubmit(data: RenameForm) {
     onRename(data.name);
     onOpenChange(false);
+    form.reset();
   }
+
   return (
     <Dialog
       open={open}
@@ -67,6 +69,11 @@ export const ImageRename = ({
                   <Input
                     {...field}
                     placeholder="Nombre del dia (dia en la playita...)"
+                    onKeyDownCapture={(e) => {
+                      if (e.key === "Enter") {
+                        form.handleSubmit(handleSubmit)();
+                      }
+                    }}
                   />
                 </FormControl>
                 <FormDescription />
@@ -76,7 +83,10 @@ export const ImageRename = ({
         </Form>
         <DialogFooter>
           <Button
-            onClick={() => onOpenChange(false)}
+            onClick={() => {
+              onOpenChange(false);
+              form.reset();
+            }}
             variant="outline"
           >
             Cancelar

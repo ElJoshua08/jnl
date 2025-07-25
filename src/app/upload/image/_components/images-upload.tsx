@@ -1,6 +1,6 @@
 import { FlowerIcon } from "@/components/icons/flower";
 import { Loading } from "@/components/shared/loading";
-import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogOverlay, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { LoaderCircle, PlusIcon } from "lucide-react";
 import { useState } from "react";
@@ -31,7 +31,8 @@ export const ImagesUpload = ({
         open={open}
         onOpenChange={setOpen}
       >
-        <AlertDialogContent className="w-[90vw] !max-w-full h-[90vh] flex flex-col">
+        <AlertDialogOverlay className="backdrop-blur-sm bg-black/75" />
+        <AlertDialogContent className="flex flex-col">
           <div className="flex items-center justify-center flex-col h-full">
           <Loading />
           </div>

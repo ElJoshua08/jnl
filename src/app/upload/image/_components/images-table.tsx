@@ -112,7 +112,7 @@ function ImagesTable({
   }
 
   return (
-    <Card className="w-full h-full shadow-lg border-2 border-border/50 hover:border-border transition-all duration-300 hover:shadow-xl">
+    <Card className="w-full h-full border-2 border-border/50 hover:border-border">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-xl">
           <ImageIcon className="size-5 text-primary" />
@@ -170,18 +170,13 @@ function ImagesTable({
                 </TableHeader>
                 <TableBody>
                   {images.map((image, index) => {
-                    const isHovered = hoveredRow === image.name;
                     return (
                       <TableRow
                         key={image.name}
                         className={`
                           transition-all duration-200 ease-in-out
                           hover:bg-muted/50 hover:shadow-sm
-                          ${isHovered ? "bg-muted/30" : ""}
-                          ${index !== images.length - 1 ? "border-b border-border/30" : ""}
                         `}
-                        onMouseEnter={() => setHoveredRow(image.name)}
-                        onMouseLeave={() => setHoveredRow(null)}
                       >
                         <TableCell className="px-6 py-4">
                           <div className="flex items-center gap-3">

@@ -31,7 +31,7 @@ const FILE_UPLOAD_TYPES = [
 
 export default async function UploadPage() {
   return (
-    <main className="flex w-full h-full items-center justify-center flex-col gap-y-12">
+    <main className="flex w-full h-full items-center justify-center flex-row gap-12 flex-wrap p-12 overflow-y-auto xl:content-center">
       <UploadItemsCards items={FILE_UPLOAD_TYPES} />
     </main>
   );

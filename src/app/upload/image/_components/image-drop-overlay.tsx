@@ -55,7 +55,11 @@ export const ImageDropOverlay = ({
     <>
       <AlertDialog open={open}>
         <AlertDialogContent
-          className="border-pink-300 border-2 shadow-lg flex items-center justify-center flex-col w-[95vw] h-[95vh]"
+          className="border-pink-300 border-2 shadow-lg flex items-center justify-center flex-col !max-w-none"
+          style={{
+            width: "calc(100vw - 2rem)",
+            height: "calc(100vh - 2rem)",
+          }}
           onDrop={handleDrop}
         >
           <AlertDialogTitle />
