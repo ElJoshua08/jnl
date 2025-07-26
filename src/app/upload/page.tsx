@@ -1,11 +1,10 @@
 "use server";
 
-import { UploadItemsCards } from "@/app/upload/items-cards";
-import { UploadItemCard } from "@/core/types/upload-item-card";
-
+import { UploadLinkCard } from "@/app/upload/upload-link";
+import { UploadLink } from "@/core/types/upload-link";
 import { AudioLinesIcon, ImageIcon, VideoIcon } from "lucide-react";
 
-const FILE_UPLOAD_TYPES = [
+const UPLOAD_LINKS = [
   {
     id: "image",
     name: "Imagen",
@@ -27,12 +26,14 @@ const FILE_UPLOAD_TYPES = [
     icon: VideoIcon,
     href: "/upload/video",
   },
-] as UploadItemCard[];
+] as UploadLink[];
 
 export default async function UploadPage() {
   return (
-    <main className="flex w-full h-full items-center justify-center flex-row gap-12 flex-wrap p-12 overflow-y-auto xl:content-center">
-      <UploadItemsCards items={FILE_UPLOAD_TYPES} />
+    <main className="flex w-full h-full items-center justify-center flex-row gap-12 flex-wrap p-12 overflow-y-auto ">
+      {UPLOAD_LINKS.map((uploadLink) => (
+        <UploadLinkCard key={uploadLink.id} link={uploadLink} />
+      ))}
     </main>
   );
 }

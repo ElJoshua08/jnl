@@ -43,14 +43,6 @@ export const AccountDropdown = ({
 }) => {
   const { theme, setTheme } = useTheme();
 
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((word) => word.charAt(0))
-      .join("")
-      .slice(0, 2);
-  };
-
   const getThemeIcon = (theme: string) => {
     switch (theme) {
       case "light":

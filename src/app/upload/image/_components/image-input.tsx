@@ -20,7 +20,7 @@ export const ImageInput = ({
 
   return (
     <div className="flex flex-col justify-start items-start gap-y-2">
-      <div className="w-full min-h-56  rounded-lg  cursor-pointer group  relative overflow-hidden shadow-lg border-2 border-border/50 hover:border-border transition-all duration-300 hover:shadow-xl">
+      <div className="w-full min-h-56  rounded-lg  cursor-pointer group  relative overflow-hidden shadow-lg border-2 border-border/50 hover:border-border transition-all duration-300 hover:shadow-xl bg-card">
         <input
           type="file"
           multiple

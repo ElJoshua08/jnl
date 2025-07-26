@@ -12,7 +12,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { es } from "date-fns/locale";
 
-export default function ImageDatePicker() {
+export default function ImageDatePicker({
+  value,
+  onValueChange,
+}: {
+  value: Date;
+  onValueChange: (value: Date) => void;
+}) {
   const today = new Date();
   const yesterday = subDays(today, 1);
   const lastWeek = subDays(today, 6);
@@ -39,9 +45,7 @@ export default function ImageDatePicker() {
           variant="outline"
           className="w-full capitalize"
         >
-          {date
-            ? formatDate(date)
-            : "Seleccionar fecha"}
+          {date ? formatDate(date) : "Seleccionar fecha"}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -112,9 +116,10 @@ export default function ImageDatePicker() {
           </div>
           <Calendar
             mode="single"
-            selected={date}
+            selected={value}
             onSelect={(newDate) => {
               if (newDate) {
+                onValueChange(newDate)
                 setDate(newDate);
               }
             }}

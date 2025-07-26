@@ -107,8 +107,8 @@ function ImagesTable({
     );
   }
 
-  function getFileExtension(filename: string): string {
-    return filename.split(".").pop()?.toUpperCase() || "";
+  function getFileExtension(type: string): string {
+    return type.split("/").pop()?.toUpperCase() || "";
   }
 
   return (
@@ -119,7 +119,7 @@ function ImagesTable({
           Galería de Imágenes
           <Badge
             variant="secondary"
-            className="ml-auto"
+            className="ml-auto hidden lg:block"
           >
             {images.length} {images.length === 1 ? "imagen" : "imágenes"}
           </Badge>
@@ -187,10 +187,10 @@ function ImagesTable({
                               />
                             </div>
                             <div className="flex flex-col">
-                              <span className="font-medium text-foreground truncate max-w-[200px]">
+                              <span className="font-medium text-foreground truncate max-w-[200px] hidden lg:block">
                                 {image.name}
                               </span>
-                              <span className="text-xs text-muted-foreground">
+                              <span className="text-xs text-muted-foreground hidden lg:block">
                                 Modificado{" "}
                                 {formatDistanceToNow(image.lastModified, {
                                   locale: es,
@@ -206,7 +206,7 @@ function ImagesTable({
                             variant="outline"
                             className="font-mono text-xs transition-colors duration-200 hover:bg-primary/10"
                           >
-                            {getFileExtension(image.name)}
+                            {getFileExtension(image.type)}
                           </Badge>
                         </TableCell>
 

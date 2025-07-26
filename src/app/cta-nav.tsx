@@ -18,7 +18,7 @@ export const CtaNav = ({
     <nav className="flex flex-row justify-between items-center py-4 border-b px-6">
       <Link
         href="/"
-        className="text-xl font-medium"
+        className="text-xl font-header font-black"
       >
         J&L
       </Link>

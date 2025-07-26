@@ -1,4 +1,4 @@
-import { EmailOtpType, ResendEmailType } from "@/core/types/email-otp";
+import { EmailOtpType } from "@/core/types/email-otp";
 import { AuthUser } from "@/entities/models/auth-user.entity";
 
 export interface IAuthService {

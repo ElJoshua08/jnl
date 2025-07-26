@@ -1,4 +1,5 @@
 import { ContainerModule } from "inversify";
+
 import { IAuthService } from "@/application/services/auth-service.interface";
 import { DI_SYMBOLS } from "@/core/types/di";
 import { AuthService } from "@/infrastructure/services/auth.service";

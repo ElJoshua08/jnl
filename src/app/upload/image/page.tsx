@@ -4,7 +4,6 @@ import { ImageDropOverlay } from "@/app/upload/image/_components/image-drop-over
 import { ImageForm } from "@/app/upload/image/_components/image-form";
 import { ImageInput } from "@/app/upload/image/_components/image-input";
 import ImagesTable from "@/app/upload/image/_components/images-table";
-import { ImagesUpload } from "@/app/upload/image/_components/images-upload";
 import { useState } from "react";
 
 export default function UploadImagePage() {
@@ -50,13 +49,8 @@ export default function UploadImagePage() {
       </section>
 
       {/* Right */}
-      <section className="flex h-full w-full lg:w-1/2 flex-col items-start justify-start grow gap-y-12 pb-12 md:pb-0">
-        <ImageForm />
-
-        <ImagesUpload
-          form={null}
-          images={images}
-        />
+      <section className="flex h-full w-full lg:w-1/2 flex-col items-start justify-start grow gap-y-12 pb-12 lg:pb-0">
+        <ImageForm images={images} />
       </section>
     </main>
   );

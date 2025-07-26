@@ -100,9 +100,9 @@ export const ImageCrop = ({
                 <Button
                   size="icon"
                   variant="outline"
-                  onClick={() => setRotation(prev => (prev + 90) % 360)}
+                  onClick={() => setRotation((prev) => (prev + 90) % 360)}
                 >
-                  <RotateCwIcon className="size-10 stroke-[1.25px] p-2" />
+                  <RotateCwIcon />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Rotar 90°</TooltipContent>

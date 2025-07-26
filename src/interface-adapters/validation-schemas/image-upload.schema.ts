@@ -9,8 +9,8 @@ export const imageSchema = z.object({
 export type Image = z.infer<typeof imageSchema>;
 
 export const imageUploadInput = z.object({
-  name: z.string("Este campo es obligatorio").min(3, "Al menos 3 caracteres"),
-  selected_date: z.iso.date("Este campo es obligatorio"),
+  title: z.string("Este campo es obligatorio").min(3, "Al menos 3 caracteres"),
+  selected_date: z.date("Este campo es obligatorio"),
   description: z
     .string()
     .min(3, "Al menos 3 caracteres")

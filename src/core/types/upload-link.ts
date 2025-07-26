@@ -1,7 +1,7 @@
 import { LucideProps } from "lucide-react";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
 
-export type UploadItemCard = {
+export type UploadLink = {
   id: string;
   name: string;
   description: string;
