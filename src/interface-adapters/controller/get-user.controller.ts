@@ -1,3 +1,5 @@
+"use server"
+
 import { getInjection } from "@/core/di/container";
 import { AuthUser } from "@/entities/models/auth-user.entity";
 

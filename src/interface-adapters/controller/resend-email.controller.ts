@@ -1,3 +1,5 @@
+"use server"
+
 import { getInjection } from "@/core/di/container";
 import { InputParseError } from "@/entities/errors/common.error";
 import z from "zod";

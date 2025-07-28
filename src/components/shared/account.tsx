@@ -69,13 +69,13 @@ export const AccountDropdown = ({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="flex items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-          <Avatar className="size-10 cursor-pointer transition-opacity hover:opacity-80 bg-gray-200 border-1 border-foreground/10 rounded-full">
+          <Avatar className="size-10 cursor-pointer transition-opacity hover:opacity-80 bg-muted border-1 border-foreground/10 rounded-full">
             <AvatarImage
               src={"/placeholder.svg?height=40&width=40"}
               alt={user.user_metadata.name}
             />
-            <AvatarFallback className="text-foreground flex items-center justify-center rounded-full w-full h-full uppercase">
-              <UserIcon className=" size-4" />
+            <AvatarFallback className="text-muted-foreground flex items-center justify-center rounded-full w-full h-full uppercase relative overflow-hidden">
+              <UserIcon className=" absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-1 size-8" />
             </AvatarFallback>
           </Avatar>
         </button>

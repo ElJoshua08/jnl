@@ -107,6 +107,11 @@ function ImagesTable({
     );
   }
 
+  function getFileNameWithoutExtension(fileName: string) {
+    const parts = fileName.split(".");
+    return parts.slice(0, parts.length - 1).join(".");
+  }
+
   function getFileExtension(type: string): string {
     return type.split("/").pop()?.toUpperCase() || "";
   }
@@ -188,7 +193,7 @@ function ImagesTable({
                             </div>
                             <div className="flex flex-col">
                               <span className="font-medium text-foreground truncate max-w-[200px] hidden lg:block">
-                                {image.name}
+                                {getFileNameWithoutExtension(image.name)}
                               </span>
                               <span className="text-xs text-muted-foreground hidden lg:block">
                                 Modificado{" "}

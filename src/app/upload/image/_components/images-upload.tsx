@@ -1,3 +1,4 @@
+import { getImageSize } from "@/app/upload/image/utils";
 import { Loading } from "@/components/shared/loading";
 import {
   AlertDialog,
@@ -9,7 +10,12 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { ImageUploadInput } from "@/interface-adapters/validation-schemas/image-upload.schema";
+import { OperationError } from "@/entities/errors/common.error";
+import { StoryInsert } from "@/entities/models/story.entity";
+import { createImageController } from "@/interface-adapters/controller/create-image.controller";
+import { createStoryController } from "@/interface-adapters/controller/create-story.controller";
+import { uploadImage } from "@/interface-adapters/controller/upload-images.controller";
+import imageCompression from "browser-image-compression";
 import { ArrowRightIcon, CheckIcon, PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -20,12 +26,11 @@ export const ImagesUpload = ({
   formInput,
 }: {
   images: File[];
-  formInput: () => Promise<ImageUploadInput | undefined>;
+  formInput: () => Promise<Omit<StoryInsert, "images_paths"> | undefined>;
 }) => {
   const [open, setOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploaded, setUploaded] = useState(false);
-
   const handleSubmit = async () => {
     if (images.length === 0) {
       toast.error("No hay imágenes para subir");
@@ -33,14 +38,66 @@ export const ImagesUpload = ({
     }
 
     const input = await formInput();
-    if (!input) {
-      return;
-    }
+    if (!input) return;
 
     setOpen(true);
     setUploading(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    // Compress images before uploading
+    const compressedImages = await Promise.all(
+      images.map((image) =>
+        imageCompression(image, {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+          fileType: "image/webp",
+          initialQuality: 0.95,
+        })
+      )
+    );
+
+    // Upload images and create records in the DB
+    const imagePaths = (
+      await Promise.all(
+        compressedImages.map(async (image) => {
+          try {
+            const imagePath = await uploadImage(image);
+            if (!imagePath) {
+              toast.error("Error al subir la imagen");
+              return null;
+            }
+
+            // Get width and height of the image
+            const { width, height } = await getImageSize(image);
+
+            // Save image info to the DB
+            await createImageController({
+              image_path: imagePath,
+              width,
+              height,
+            });
+
+            return imagePath;
+          } catch (e) {
+            if (e instanceof OperationError) {
+              toast.error("Error al subir la imagen");
+            } else {
+              console.error("Error inesperado:", e);
+            }
+            return null;
+          }
+        })
+      )
+    ).filter((image) => image !== null); // Remove null entries
+
+    // Create the story record
+    await createStoryController({
+      title: input.title,
+      description: input.description,
+      selected_date: input.selected_date,
+      images_paths: imagePaths,
+      tags: input.tags,
+    });
 
     setUploading(false);
     setUploaded(true);
@@ -49,11 +106,11 @@ export const ImagesUpload = ({
   return (
     <>
       <Button
-        className="w-full font-semibold"
+        className="w-full font-bold text-lg h-auto py-3 inline-flex items-center gap-6"
         size="lg"
         onClick={handleSubmit}
       >
-        Subir fotos <PlusIcon className="size-4 stroke-3" />
+        Subir fotos <PlusIcon className="size-6 stroke-3" />
       </Button>
       <AlertDialog
         open={open}
@@ -98,19 +155,19 @@ const UploadedImages = ({}) => {
         <AlertDialogDescription>
           Haz click en el botón de abajo para verlas
         </AlertDialogDescription>
-
       </AlertDialogHeader>
       <div className="py-12 flex items-center justify-center w-full">
         <div className="flex items-center justify-center size-32 p-6 shadow-pink-600/65 shadow-xl rounded-full bg-pink-400">
           <CheckIcon className="size-28 text-white drop-shadow-lg drop-shadow-black/50 stroke-3" />
         </div>
-        </div>
+      </div>
       <AlertDialogFooter>
-        <Link href="/gallery/stories/image-id" className={
-          buttonVariants({
-            className: "w-full"
-          })
-        }>
+        <Link
+          href="/gallery/stories/image-id"
+          className={buttonVariants({
+            className: "w-full",
+          })}
+        >
           Ver mis fotos <ArrowRightIcon className="size-4 stroke-3" />
         </Link>
       </AlertDialogFooter>

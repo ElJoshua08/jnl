@@ -29,7 +29,7 @@ export const ImageInput = ({
           className="absolute top-0 left-0 w-full h-full cursor-pointer opacity-0 z-20"
         />
         <div className="absolute flex flex-col items-center justify-center w-full h-full gap-y-8 top-0 left-0 z-0">
-          <span className="rounded-full transition-all p-4 border-1 shadow-sm bg-muted group-hover:shadow-lg group-hover:shadow-pink-300 group-hover:scale-105 group-hover:border-pink-300 group-hover:bg-pink-300 group-hover:text-white">
+          <span className="rounded-full transition-all p-4 border-1 shadow-sm bg-muted group-hover:shadow-lg group-hover:shadow-pink-300 dark:group-hover:shadow-pink-800 group-hover:scale-105 group-hover:border-pink-300 group-hover:bg-pink-300 dark:group-hover:bg-pink-800 dark:group-hover:border-pink-800 group-hover:text-white">
             <PlusIcon className="size-14 stroke-[2.25px] p-1" />
           </span>
 

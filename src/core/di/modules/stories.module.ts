@@ -6,8 +6,6 @@ import { StoriesRepository } from "@/infrastructure/repositories/stories.reposit
 
 export const StoriesModule = new ContainerModule((container) => {
   if (process.env.NODE_ENV === "test") {
-    // aquí podrías enlazar a un mock para testing
-    // container.bind<IAuthService>(DI_SYMBOLS.IAuthService).to(MockAuthService);
   } else {
     container
       .bind<IStoriesRepository>(DI_SYMBOLS.IStoriesRepository)

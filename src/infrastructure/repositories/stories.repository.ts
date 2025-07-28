@@ -1,23 +1,68 @@
 import { IStoriesRepository } from "@/application/repositories/stories-repository.interface";
-import { Story } from "@/entities/models/story.entity";
+import { NotFoundError, OperationError } from "@/entities/errors/common.error";
+import { Story, StoryInsert } from "@/entities/models/story.entity";
+import { createAdminClient } from "@/infrastructure/utils/supabase/server";
 
 export class StoriesRepository implements IStoriesRepository {
   async getStories(): Promise<Story[]> {
-    return [];
+    const supabase = await createAdminClient();
+
+    const { data, error } = await supabase.from("stories").select("*");
+
+    if (error) {
+      throw new OperationError(error.message, {
+        cause: error.cause,
+      });
+    }
+
+    if (!data) {
+      throw new NotFoundError("Story not found");
+    }
+
+    return data as Story[];
   }
 
   async getStory(id: string): Promise<Story> {
-    return {
-      id: "1",
-      title: "Story 1",
-      description: "Description 1",
-      selected_date: new Date(),
-      images_urls: ["https://picsum.photos/id/1/200/300"],
-      tags: ["tag1", "tag2"],
-    };
+    const supabase = await createAdminClient();
+
+    const { data, error } = await supabase
+      .from("stories")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      throw new OperationError(error.message, {
+        cause: error.cause,
+      });
+    }
+
+    if (!data) {
+      throw new NotFoundError("Story not found");
+    }
+
+    return data as Story;
   }
 
-  async createStory(story: Story): Promise<void> {
-    // Aquí podrías hacer una llamada a una base de datos
+  async createStory(story: StoryInsert): Promise<Story> {
+    const supabase = await createAdminClient();
+
+    const { data, error } = await supabase
+      .from("stories")
+      .insert(story)
+      .select("*")
+      .single();
+
+    if (error) {
+      throw new OperationError(error.message, {
+        cause: error.cause,
+      });
+    }
+
+    if (!data) {
+      throw new OperationError("Error creating story");
+    }
+
+    return data as Story;
   }
 }

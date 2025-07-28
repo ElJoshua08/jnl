@@ -14,16 +14,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { TagsInput } from "@/components/ui/tags-input";
 import { Textarea } from "@/components/ui/textarea";
+import { StoryInsert } from "@/entities/models/story.entity";
 import {
-  imageUploadInput,
-  ImageUploadInput,
+  imageUploadInput
 } from "@/interface-adapters/validation-schemas/image-upload.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FileTextIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 export const ImageForm = ({ images }: { images: File[] }) => {
-  const form = useForm<ImageUploadInput>({
+  const form = useForm<Omit<StoryInsert, "images_paths">>({
     resolver: zodResolver(imageUploadInput),
     defaultValues: {
       title: "",

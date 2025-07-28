@@ -81,15 +81,20 @@ export const ImageCrop = ({
     }
   }
 
+  function getFileNameWithoutExtension(fileName: string) {
+    const parts = fileName.split(".");
+    return parts.slice(0, parts.length - 1).join(".");
+  }
+
   return (
     <Dialog
       open={open}
       onOpenChange={onOpenChange}
     >
-      <DialogContent className=" w-full h-[90dvh] flex flex-col justify-between p-4 gap-4 !absolute">
+      <DialogContent className=" w-full lg:min-w-3xl h-[90dvh] flex flex-col justify-between p-4 gap-4 !absolute">
         <DialogHeader>
           <DialogTitle className="text-base font-medium">
-            {image.name}
+            {getFileNameWithoutExtension(image.name)}
           </DialogTitle>
         </DialogHeader>
 
