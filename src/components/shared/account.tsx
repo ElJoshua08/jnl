@@ -74,8 +74,8 @@ export const AccountDropdown = ({
               src={"/placeholder.svg?height=40&width=40"}
               alt={user.user_metadata.name}
             />
-            <AvatarFallback className="text-muted-foreground flex items-center justify-center rounded-full w-full h-full uppercase relative overflow-hidden">
-              <UserIcon className=" absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-1 size-8" />
+            <AvatarFallback className="text-muted-foreground flex items-center justify-center rounded-full w-full h-full uppercase font-header font-bold text-md">
+              {user.user_metadata.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
         </button>

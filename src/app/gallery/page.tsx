@@ -1,9 +1,9 @@
-"use client";
+import { CtaNav } from "@/app/cta-nav";
+import { Masonry } from "@/app/gallery/_components/masonry";
+import { Footer } from "@/components/shared/footer";
+import { getUserController } from "@/interface-adapters/controller/get-user.controller";
 
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-
-interface GalleryImage {
+export interface GalleryImage {
   id: number;
   src: string;
   alt: string;
@@ -94,99 +94,41 @@ const images: GalleryImage[] = [
   },
 ];
 
-export default function GalleryPage() {
-  const [visibleImages, setVisibleImages] = useState<Set<number>>(new Set());
-  const observerRef = useRef<IntersectionObserver | null>(null);
-
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const imageId = Number.parseInt(
-              entry.target.getAttribute("data-id") || "0"
-            );
-            setVisibleImages((prev) => new Set([...prev, imageId]));
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "50px",
-      }
-    );
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, []);
-
-  const setImageRef = (element: HTMLDivElement | null, imageId: number) => {
-    if (element && observerRef.current) {
-      element.setAttribute("data-id", imageId.toString());
-      observerRef.current.observe(element);
-    }
-  };
+export default async function GalleryPage() {
+  const user = await getUserController();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-light text-gray-900 mb-4">Gallery</h1>
-          <p className="text-gray-600 text-lg">
-            A curated collection of visual stories
-          </p>
+    <div className="h-dvh w-full">
+      <div
+        className="fixed inset-0 -z-10 dark:hidden"
+        style={{
+          background:
+            "linear-gradient(120deg, #ffb3ba 0%, #f1f1f1 50%, #bae1ff 100%)",
+        }}
+      />
+
+      <div
+        className="fixed inset-0 -z-10 hidden dark:block"
+        style={{
+          background:
+            "linear-gradient(120deg, #7e073b 0%, #030017 50%, #11035d 100%)",
+        }}
+      />
+      <CtaNav user={user} />
+
+      <main className="flex flex-col items-center justify-center h-fit w-full relative mt-37 overflow-y-auto-scroll pb-20">
+        <div className="w-full px-32 flex items-center justify-center pb-28">
+          <span className="text-5xl text-balance text-center font-header font-bold tracking-tight">
+            Una colección de nuestros mejores momenotos juntos
+          </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-max">
-          {images.map((image) => (
-            <div
-              key={image.id}
-              ref={(el) => setImageRef(el, image.id)}
-              className={`
-                group relative overflow-hidden rounded-2xl shadow-sm hover:shadow-xl
-                transition-all duration-700 ease-out transform w-full h-full object-cover
-                ${visibleImages.has(image.id) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
-                ${image.wide ? "md:col-span-2" : ""}
-                ${image.tall ? "md:row-span-2" : ""}
-              `}
-              style={{
-                transitionDelay: `${(image.id % 6) * 100}ms`,
-              }}
-            >
-              <div className="relative overflow-hidden">
-                <Image
-                  src={image.src || "/placeholder.svg"}
-                  alt={image.alt}
-                  width={image.wide ? 600 : 300}
-                  height={image.tall ? 500 : image.wide ? 250 : 400}
-                  className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
-                />
+        <section className="w-full px-32 mx-auto h-full">
+          <Masonry images={images} />
+        </section>
+      </main>
 
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                {/* Image info overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  <h3 className="font-medium text-sm">{image.alt}</h3>
-                </div>
-              </div>
-
-              {/* Subtle border effect */}
-              <div className="absolute inset-0 rounded-2xl ring-1 ring-black/5 pointer-events-none" />
-            </div>
-          ))}
-        </div>
-
-        {/* Load more section */}
-        <div className="text-center mt-16">
-          <button className="px-8 py-3 bg-white text-gray-700 rounded-full shadow-sm hover:shadow-md transition-all duration-300 hover:bg-gray-50 font-medium">
-            Load More Images
-          </button>
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 }
