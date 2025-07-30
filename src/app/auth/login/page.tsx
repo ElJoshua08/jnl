@@ -128,7 +128,7 @@ export default function LoginPage() {
       </Card>
       <Link
         href="/auth/signup"
-        className="text-xs no-underline hover:underline hover:text-foreground text-muted-foreground transition-all"
+        className="text-sm no-underline hover:underline hover:text-foreground text-muted-foreground transition-all"
       >
         Aún no tengo cuenta
       </Link>
