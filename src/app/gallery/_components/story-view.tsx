@@ -55,13 +55,13 @@ export const StoryView = ({
             />
 
             {/* Image info overlay */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex justify-between items-center">
+            <div className="absolute bottom-0 left-0 right-0 px-4 py-2 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex justify-between items-center">
               {story.title && (
                 <h3 className="text-lg font-semibold">{story.title}</h3>
               )}
 
               {story.selected_date && (
-                <p className="text-xs text-muted font-semibold">{format(story.selected_date, "dd/MM/yyyy")}</p>
+                <p className="text-xs text-muted/75 font-semibold">{format(story.selected_date, "dd/MM/yyyy")}</p>
               )}
             </div>
           </div>

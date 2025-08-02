@@ -4,14 +4,6 @@ import { Footer } from "@/components/shared/footer";
 import { getStoriesController } from "@/interface-adapters/controller/get-stories.controller";
 import { getUserController } from "@/interface-adapters/controller/get-user.controller";
 
-export interface GalleryImage {
-  id: number;
-  src: string;
-  alt: string;
-  wide?: boolean;
-  tall?: boolean;
-}
-
 export default async function GalleryPage() {
   const user = await getUserController();
   const stories = await getStoriesController();

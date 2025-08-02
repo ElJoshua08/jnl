@@ -39,12 +39,13 @@ export const Masonry = ({ stories }: { stories: Story[] }) => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-max relative w-full max-w-400">
-      <div className="absolute w-[250px] h-[250px] -top-6 -left-6 border-t border-l border-pink-800 dark:border-pink-300 z-10" />
+      <div className="absolute w-[250px] h-[250px] -top-6 -left-6 border-t border-l border-pink-800 dark:border-pink-300" />
 
       <div className="absolute w-[250px] h-[250px] -top-6 -right-6 border-t border-r border-pink-800 dark:border-pink-300" />
 
       {stories.map((story, index) => (
         <StoryView
+          key={story.id}
           story={story}
           index={index}
           isVisible={visibleImages.has(story.id)}
