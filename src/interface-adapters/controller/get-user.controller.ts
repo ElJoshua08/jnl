@@ -1,9 +1,9 @@
-"use server"
+"use server";
 
 import { getInjection } from "@/core/di/container";
 import { AuthUser } from "@/entities/models/auth-user.entity";
 
-function presenter(user: AuthUser  | null) {
+function presenter(user: AuthUser | null) {
   if (!user) {
     return null;
   }
@@ -16,7 +16,11 @@ function presenter(user: AuthUser  | null) {
 
 export async function getUserController() {
   const authService = getInjection("IAuthService");
-  const user = await authService.getCurrentUser();
 
-  return presenter(user);
+  try {
+    const user = await authService.getCurrentUser();
+    return presenter(user);
+  } catch (e) {
+    return null;
+  }
 }

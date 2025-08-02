@@ -2,6 +2,7 @@
 
 import { AuthenticationError } from "@/entities/errors/auth.error";
 import { InputParseError } from "@/entities/errors/common.error";
+import { createUserController } from "@/interface-adapters/controller/create-user.controller";
 import { loginController } from "@/interface-adapters/controller/login.controller";
 import { resendEmailController } from "@/interface-adapters/controller/resend-email.controller";
 import { signupController } from "@/interface-adapters/controller/signup.controller";
@@ -43,7 +44,8 @@ export async function loginAction(input: LoginForm) {
 
 export async function signupAction(input: SignupForm) {
   try {
-    await signupController(input);
+    const { id } = await signupController(input);
+    await createUserController(input, id);
   } catch (e) {
     if (e instanceof InputParseError) {
       return {
@@ -59,6 +61,7 @@ export async function signupAction(input: SignupForm) {
       };
     }
 
+    console.error(e);
     return {
       success: false,
       error: {

@@ -1,4 +1,5 @@
 export interface IStorageService {
-  upload(file: File): Promise<string>;
-  delete(path: string): Promise<void>;
+  upload(bucket: string, file: File): Promise<string>;
+  getUrl(bucket: string, path: string): Promise<string>;
+  delete(bucket: string, path: string): Promise<void>;
 }

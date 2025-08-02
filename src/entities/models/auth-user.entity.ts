@@ -10,3 +10,4 @@ export const authUser = z.object({
 });
 
 export type AuthUser = z.infer<typeof authUser>;
+

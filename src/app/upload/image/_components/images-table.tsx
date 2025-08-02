@@ -46,7 +46,6 @@ function ImagesTable({
   const [editOpen, setEditOpen] = useState(false);
   const [renameOpen, setRenameOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-  const [hoveredRow, setHoveredRow] = useState<string | null>(null);
 
   function handleOpenDialog(image: File, type: "edit" | "rename" | "delete") {
     setSelectedImage(image);

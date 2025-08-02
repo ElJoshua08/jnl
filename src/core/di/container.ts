@@ -1,8 +1,8 @@
 import { Container } from "inversify";
 
-import { ImagesModule } from "@/core/di/modules/images.module";
 import { StorageModule } from "@/core/di/modules/storage.module";
 import { StoriesModule } from "@/core/di/modules/stories.module";
+import { UsersModule } from "@/core/di/modules/users.module";
 import { DI_RETURN_TYPES, DI_SYMBOLS } from "@/core/types/di";
 import { AuthModule } from "./modules/auth.module";
 
@@ -15,7 +15,7 @@ export const initializeContainer = () => {
     AuthModule,
     StorageModule,
     StoriesModule,
-    ImagesModule
+    UsersModule
   );
 };
 
@@ -24,7 +24,7 @@ export const destroyContainer = () => {
     AuthModule,
     StorageModule,
     StoriesModule,
-    ImagesModule
+    UsersModule
   );
 };
 

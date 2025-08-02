@@ -1,4 +1,3 @@
-import { getImageSize } from "@/app/upload/image/utils";
 import { Loading } from "@/components/shared/loading";
 import {
   AlertDialog,
@@ -12,7 +11,6 @@ import {
 import { Button, buttonVariants } from "@/components/ui/button";
 import { OperationError } from "@/entities/errors/common.error";
 import { StoryInsert } from "@/entities/models/story.entity";
-import { createImageController } from "@/interface-adapters/controller/create-image.controller";
 import { createStoryController } from "@/interface-adapters/controller/create-story.controller";
 import { uploadImage } from "@/interface-adapters/controller/upload-images.controller";
 import imageCompression from "browser-image-compression";
@@ -66,16 +64,6 @@ export const ImagesUpload = ({
               toast.error("Error al subir la imagen");
               return null;
             }
-
-            // Get width and height of the image
-            const { width, height } = await getImageSize(image);
-
-            // Save image info to the DB
-            await createImageController({
-              image_path: imagePath,
-              width,
-              height,
-            });
 
             return imagePath;
           } catch (e) {

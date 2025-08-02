@@ -20,7 +20,7 @@ export const SuccessDialog = ({ email }: { email: string }) => {
       if (countdown <= 0) {
         return;
       }
-      setCountdown(prev => prev - 1);
+      setCountdown((prev) => prev - 1);
     }, 1000);
 
     return () => clearInterval(interval);
@@ -47,18 +47,16 @@ export const SuccessDialog = ({ email }: { email: string }) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <div className="flex items-center justify-center py-10">
-          <HeartIcon className=" text-red-500 fill-red-500 size-24 " />
+          <HeartIcon className=" text-red-600 fill-red-600 size-24 animate-pulse ease-in-out drop-shadow-lg drop-shadow-red-800" />
         </div>
         <AlertDialogFooter className="justify-between flex flex-row items-center w-full">
           <span className="text-xs text-muted-foreground">
-            {countdown > 0 &&
-                `${countdown} segundos restantes`
-            }
+            {countdown > 0 && `${countdown} segundos restantes`}
           </span>
 
           <Button
             variant="outline"
-            className="w-fit"
+            className="w-fit ml-6"
             disabled={countdown > 0}
             onClick={handleClick}
             loadOnClick

@@ -30,7 +30,7 @@ export const CtaNav = ({
   const pathname = usePathname();
 
   return (
-    <nav className="flex flex-row justify-between items-center py-4 border-b px-6 backdrop-blur-xl bg-background/50 fixed top-0 left-0 w-full z-20">
+    <nav className="flex flex-row justify-between items-center py-4 border-b px-6 backdrop-blur-xl bg-background/50 w-full z-50 ">
       <Link
         href="/"
         className="text-xl font-header font-black"
