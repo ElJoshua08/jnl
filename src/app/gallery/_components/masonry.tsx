@@ -1,5 +1,6 @@
 "use client";
 
+import { StoryView } from "@/app/gallery/_components/story-view";
 import { Story } from "@/entities/models/story.entity";
 import { useEffect, useRef, useState } from "react";
 
@@ -42,42 +43,14 @@ export const Masonry = ({ stories }: { stories: Story[] }) => {
 
       <div className="absolute w-[250px] h-[250px] -top-6 -right-6 border-t border-r border-pink-800 dark:border-pink-300" />
 
-      {stories.map((story, index) => {
-        const imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${story.images_paths[0]}`;
-        if (!imageUrl) return null;
-
-        return (
-          <div
-            key={story.id}
-            ref={(el) => setImageRef(el, story.id)}
-            draggable={false}
-            className={`
-                group relative  rounded-sm  shadow-sm hover:shadow-xl
-                transition-all duration-700 ease-out transform w-fit h-fit object-cover cursor-pointer overflow-hidden
-                ${visibleImages.has(story.id) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
-              `}
-            style={{
-              transitionDelay: `${(index % 6) * 100}ms`,
-            }}
-          >
-            <div className="relative overflow-hidden">
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-              <img
-                src={imageUrl}
-                className="w-full h-full object-cover"
-              />
-
-              {/* Image info overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-            </div>
-
-            {/* Subtle border effect */}
-            <div className="absolute inset-0  ring-1 ring-black/5 pointer-events-none" />
-          </div>
-        );
-      })}
+      {stories.map((story, index) => (
+        <StoryView
+          story={story}
+          index={index}
+          isVisible={visibleImages.has(story.id)}
+          setImageRef={setImageRef}
+        />
+      ))}
     </div>
   );
 };

@@ -36,8 +36,10 @@ export default async function GalleryPage() {
 
       <CtaNav user={user} />
 
-      <main className="flex flex-col items-start justify-center
-      w-full py-20 px-24 gap-y-24">
+      <main
+        className="flex flex-col items-start justify-center
+      w-full py-20 px-24 gap-y-24 min-h-dvh"
+      >
         <div className="w-full flex items-center justify-center">
           <span className="font-header text-5xl text-center text-balance font-bold tracking-tight">
             Una coleccion de nuestros mejores momentos juntos
