@@ -1,44 +1,33 @@
 "use server";
 
-import { AuthenticationError } from "@/entities/errors/auth.error";
-import { InputParseError } from "@/entities/errors/common.error";
-import { createUserController } from "@/interface-adapters/controller/create-user.controller";
-import { loginController } from "@/interface-adapters/controller/login.controller";
-import { resendEmailController } from "@/interface-adapters/controller/resend-email.controller";
-import { signupController } from "@/interface-adapters/controller/signup.controller";
-import {
-  LoginForm,
-  SignupForm,
-} from "@/interface-adapters/validation-schemas/auth.schema";
+import { loginForm, LoginForm } from "@/schemas/login.schema";
+import { login } from "@/services/supabase/login";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function loginAction(input: LoginForm) {
-  try {
-    await loginController(input);
-  } catch (e) {
-    if (e instanceof InputParseError) {
-      return {
-        error: {
-          message: "Algunos de los campos no son válidos",
-        },
-      };
-    }
+  const { data } = loginForm.safeParse(input);
 
-    if (e instanceof AuthenticationError) {
-      return {
-        error: {
-          message: "El usuario no existe o la contraseña es incorrecta",
-        },
-      };
-    }
-
+  if (!data || !data.email || !data.password) {
     return {
       error: {
-        message: "Algo ha salido mal",
+        message: "Missing data",
       },
     };
   }
 
+  const { error } = await login({
+    email: data?.email,
+    password: data?.password,
+  });
+
+  if (error) {
+    return {
+      error,
+    };
+  }
+
+  revalidatePath("/", "layout");
   redirect("/");
 }
 

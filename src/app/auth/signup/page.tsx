@@ -21,10 +21,8 @@ import {
 } from "@/components/ui/form";
 import { Input, InputPassword } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import {
-  signupForm,
-  SignupForm,
-} from "@/interface-adapters/validation-schemas/auth.schema";
+import { signUpForm, SignUpForm } from "@/schemas/signup.schema";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useState } from "react";
@@ -33,8 +31,8 @@ import { toast } from "sonner";
 
 export default function LoginPage() {
   const [successfulSubmit, setSuccessfulSubmit] = useState(false);
-  const form = useForm<SignupForm>({
-    resolver: zodResolver(signupForm),
+  const form = useForm<SignUpForm>({
+    resolver: zodResolver(signUpForm),
     defaultValues: {
       name: "",
       email: "",
@@ -43,7 +41,7 @@ export default function LoginPage() {
     },
   });
 
-  async function handleSubmit(data: SignupForm) {
+  async function handleSubmit(data: SignUpForm) {
     const { success, error } = await signupAction(data);
 
     if (error) {

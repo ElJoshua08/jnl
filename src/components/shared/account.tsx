@@ -12,8 +12,10 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { logoutController } from "@/interface-adapters/controller/logout.controller";
+import { logout } from "@/services/supabase/logout.service";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { AuthUser } from "@supabase/supabase-js";
 import {
   AudioLinesIcon,
   CheckIcon,
@@ -31,16 +33,7 @@ import {
 import { useTheme } from "next-themes";
 import Link from "next/link";
 
-export const AccountDropdown = ({
-  user,
-}: {
-  user: {
-    email: string;
-    user_metadata: {
-      name: string;
-    };
-  };
-}) => {
+export const AccountDropdown = ({ user }: { user: AuthUser }) => {
   const { theme, setTheme } = useTheme();
 
   const getThemeIcon = (theme: string) => {
@@ -203,7 +196,7 @@ export const AccountDropdown = ({
 
         <DropdownMenuItem
           onClick={async () => {
-            await logoutController();
+            await logout();
           }}
           className="flex items-center cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50 dark:focus:bg-red-950"
         >

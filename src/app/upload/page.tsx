@@ -1,39 +1,17 @@
 "use server";
 
-import { UploadLinkCard } from "@/app/upload/upload-link";
-import { UploadLink } from "@/core/types/upload-link";
-import { AudioLinesIcon, ImageIcon, VideoIcon } from "lucide-react";
-
-const UPLOAD_LINKS = [
-  {
-    id: "image",
-    name: "Imagen",
-    description: "Sube una o varias imagenes a la galeria",
-    icon: ImageIcon,
-    href: "/upload/image",
-  },
-  {
-    id: "audio",
-    name: "Audio",
-    description: "Sube uno o varios audios a la galeria",
-    icon: AudioLinesIcon,
-    href: "/upload/audio",
-  },
-  {
-    id: "video",
-    name: "Video",
-    description: "Sube uno o varios videos a la galeria",
-    icon: VideoIcon,
-    href: "/upload/video",
-  },
-] as UploadLink[];
+import { UploadForm } from "@/app/upload/components/upload-form";
+import { AppDock } from "@/components/shared/app-dock";
+import { getUser } from "@/services/supabase/get-user.service";
 
 export default async function UploadPage() {
+  const { data: user } = await getUser();
+
   return (
-    <main className="flex w-full h-full items-center justify-center flex-row gap-12 flex-wrap p-12 overflow-y-auto ">
-      {UPLOAD_LINKS.map((uploadLink) => (
-        <UploadLinkCard key={uploadLink.id} link={uploadLink} />
-      ))}
+    <main className="flex w-full h-dvh items-start justify-start">
+      <UploadForm />
+
+      <AppDock />
     </main>
   );
 }

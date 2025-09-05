@@ -1,9 +1,8 @@
 import { type EmailOtpType } from "@supabase/supabase-js";
 import { type NextRequest } from "next/server";
 
-import { getInjection } from "@/core/di/container";
-import { AuthenticationError } from "@/entities/errors/auth.error";
 import { redirect } from "next/navigation";
+import { verifyOtp } from "@/services/supabase/verify-otp";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -12,14 +11,7 @@ export async function GET(request: NextRequest) {
   const next = searchParams.get("next") ?? "/";
 
   if (token_hash && type) {
-    try {
-      const authService = getInjection("IAuthService");
-      await authService.verifyOtp(token_hash, type);
-    } catch (e) {
-      const error = e as AuthenticationError;
-
-      redirect(`/auth/error?cause=${error.cause}`);
-    }
+    const { error } = await verifyOtp(token_hash, type);
 
     // redirect user to specified redirect URL or root of app
     redirect(next);

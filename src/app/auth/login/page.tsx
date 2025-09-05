@@ -20,10 +20,7 @@ import {
 } from "@/components/ui/form";
 import { Input, InputPassword } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import {
-  LoginForm,
-  loginForm,
-} from "@/interface-adapters/validation-schemas/auth.schema";
+import { loginForm, LoginForm } from "@/schemas/login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
